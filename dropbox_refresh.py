@@ -4,7 +4,7 @@ import sys
 import os
 import dropbox
 
-DROPBOX_TOKEN = 'UnvKF8jf57AAAAAAAAAACUb0cmdcJk8ga4Y_VN3-B8qolM7CO1Jh10wDri7Aw9zw'
+DROPBOX_TOKEN = 'UnvKF8jf57AAAAAAAAAACUb0cmdcJk8ga4Y_VN3-B8qolM7CO1Jh10wDri7Aw9zw' #rasplex
 # DROPBOX_TOKEN = 'iIk7xrg4TUsAAAAAAAAKE761j2JlHWCNsdBPY0a6-YB13Sv1dRCL3GG0icpw8r-r'
 DROPBOX_FOLDER = '/Users/SteAlzzer/Desktop/drop_text/'
 
@@ -47,11 +47,19 @@ def sync_local_folder(dbx, local_folder, selective_sync=[]):
     dropbox_files = list_folder_dropbox(dbx, '')
     local_files = list_folder_local(local_folder)
     if local_files == []:
-        print('[dropbox_refresh.py] >> Dropbox folder is not created. Doing sync...')
+        print(u'[dropbox_refresh.py] >> Dropbox folder is not created. Doing sync...')
         for file in dropbox_files:
             if isinstance(dropbox_files[file], dropbox.files.FileMetadata):
+                print(u'[dropbox_refresh.py] >> Downloading {}...'.format(file))
+                print(dropbox_files[file])
+                input()
                 download_file_to_file(dbx, file, local_folder)
-            
+    else:
+        pass            
+
+def get_mtime_local(file):
+    return os.path.getmtime(file)
+
 
 def download_file(dbx, filepath):
     try:
