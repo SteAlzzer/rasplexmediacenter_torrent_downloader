@@ -37,7 +37,8 @@ if __name__ == '__main__':
         if not args.file:
             print('Filepath needed')
             sys.exit(-1)
-        filename = get_torrent_name(args.file)
+        torrent_file_path = os.path.abspath(os.path.realpath(args.file[0]))
+        filename = get_torrent_name(torrent_file_path)
         print('{}.torrent'.format(filename.replace(' ', '_')))
         sys.exit(0)
 
@@ -52,4 +53,9 @@ if __name__ == '__main__':
         path_2_split = path_2.split('/')
         path_1_pos = path_1_split.index(SEARCH_FOR_DROPBOX)
         path_2_pos = path_2_split.index(SEARCH_FOR_DROPBOX)
-        if 
+        new_path_1 = os.path.join(*path_1_split[path_1_pos+1:])
+        new_path_2 = os.path.join(*path_2_split[path_2_pos+1:])
+        
+        cmd = 'dropbox.sh move "{0}" "{1}"'.format(new_path_1, new_path_2)
+        os.system(cmd)
+        sys.exit(0)
