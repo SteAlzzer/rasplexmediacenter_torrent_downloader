@@ -12,9 +12,12 @@ def _remove_tmp_file():
 
 def get_torrent_destionation_path(torrent_file_path):
     dropbox_path = os.path.abspath(os.path.realpath(config.DROPBOX_TORRENT_FOLDER_PATH))
+    print('*', torrent_file_path)
     for folder_name, full_dest_path in config.DROPBOX_FOLDER_MAP.items():
         full_path_folder = os.path.join(dropbox_path, folder_name)
-        if full_dest_path in torrent_file_path:
+        print(full_path_folder)
+        print(folder_name in torrent_file_path)
+        if folder_name in torrent_file_path:
             return os.path.abspath(os.path.realpath(full_dest_path))
 
 
