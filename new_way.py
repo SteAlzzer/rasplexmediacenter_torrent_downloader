@@ -73,8 +73,8 @@ def dropbox_update_local_filelist(file_to_update):
     if rel_file not in DROPBOX_LOCAL_FILE_LIST:
         print('~This is new file in list', rel_file)
         DROPBOX_LOCAL_FILE_LIST[rel_file] = {}
-    DROPBOX_LOCAL_FOLDER[rel_file]['size'] = os.path.getsize(file_to_update)
-    DROPBOX_LOCAL_FOLDER[rel_file]['mtime'] = os.path.getmtime(file_to_update)
+    DROPBOX_LOCAL_FILE_LIST[rel_file]['size'] = os.path.getsize(file_to_update)
+    DROPBOX_LOCAL_FILE_LIST[rel_file]['mtime'] = os.path.getmtime(file_to_update)
 
 
 def dropbox_save_local_filelist():
@@ -139,6 +139,7 @@ def torrent_add_file(torrent_file, dest_folder):
 
 def is_file_torrent(file):
     # todo: get some real shit
+    print('~ Here is an extension...', os.path.splitext(file)[1])
     return os.path.splitext(file)[1] is '.torrent'
 
 
