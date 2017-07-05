@@ -20,6 +20,8 @@ DROPBOX_LOCAL_FILE_LIST_BACKUP = './.dropboxlocalfilelist.tbox'
 
 TMP_FILE = '/tmp/tbox.tmp'
 
+ADD_NO_DEST_FILES = False
+
 DELAY = 5  # 2 min
 # DELAY = 60 * 2  # 2 min
 
@@ -59,6 +61,9 @@ def dropbox_download_files():
 
 def dropbox_move_file(source_file, dest_file):
     print('~Moving files in dropbox', source_file, dest_file)
+    if os.path.split(source_file)[1] == os.path.split(dest_file)[1]:
+        print('~ Files have same names. Skipping...')
+        return
     source_file_rel = os.path.relpath(source_file, DROPBOX_LOCAL_FOLDER)
     dest_file_rel = os.path.relpath(dest_file, DROPBOX_LOCAL_FOLDER)
 
@@ -106,7 +111,7 @@ def torrent_get_real_filename(torrent_file):
     with open(TMP_FILE) as f:
         real_name = f.readline().strip() + '.torrent'
         torrent_dir = os.path.split(torrent_file)[0]
-        real_fullname = os.path.join(torrent_dir, real_name)
+        real_fullname = os.path.join(torrent_dir, real_name.replace(' ', '_'))
     remove_tmp_file()
     print('~Realname got:', real_fullname)
     return real_fullname
@@ -155,7 +160,7 @@ def rename_file(orig_file, dest_file):
 def get_dest_path_for_torrent_file(torrent_file):
     print('~Getting destination folder for file')
     dropbox_torrent_folder_path = os.path.join(DROPBOX_LOCAL_FOLDER, DROPBOX_TORRENT_FOLDER)
-    torrent_file_rel = os.path.join(torrent_file, dropbox_torrent_folder_path)
+    torrent_file_rel = os.path.relpath(torrent_file, dropbox_torrent_folder_path)
     print('~Related path for file:', torrent_file_rel)
     for folder_name in FOLDERS_MAP_STRUCTURE.keys():
         if folder_name in torrent_file_rel:
@@ -174,15 +179,16 @@ def main_cycle():
                     original_file = torrent_get_real_filename(file)
                     rename_file(file, original_file)
                     dropbox_move_file(file, original_file)
-                    dest_path = get_dest_path_for_torrent_file(file)
+                    dest_path = get_dest_path_for_torrent_file(original_file)
                     if not dest_path:
                         print('! Strange: for {} releated folder not found'.format(file))
-                        dest_path = FOLDERS_MAP_STRUCTURE['Others']
+                        if ADD_NO_DEST_FILES:
+                            dest_path = FOLDERS_MAP_STRUCTURE['Others']
                     torrent_add_file(original_file, dest_path)
                 elif is_file_cmd(file):
                     pass
 
-                dropbox_update_local_filelist(file)
+                dropbox_update_local_filelist(original_file)
             dropbox_save_local_filelist()
         print('~Sleep')
         time.sleep(DELAY)
