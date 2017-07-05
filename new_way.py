@@ -20,7 +20,8 @@ DROPBOX_LOCAL_FILE_LIST_BACKUP = '~/.dropboxlocalfilelist.tbox'
 
 TMP_FILE = '/tmp/tbox.tmp'
 
-DELAY = 60 * 2  # 2 min
+DELAY = 5  # 2 min
+# DELAY = 60 * 2  # 2 min
 
 
 def list_folder(folder):
@@ -52,7 +53,7 @@ def dropbox_check_new_files():
 
 
 def dropbox_download_files():
-    command = '"{}"" -s download / "{}"'.format(DROPBOX_SCRIPT, DROPBOX_LOCAL_FOLDER)
+    command = '"{}" -s download / "{}"'.format(DROPBOX_SCRIPT, DROPBOX_LOCAL_FOLDER)
     os.system(command)
 
 
@@ -116,7 +117,7 @@ def torrent_check_daemon():
 
 
 def remove_tmp_file(tries=10):
-    print('Удаляем временный файл', tries)
+    print(u'Удаляем временный файл', tries)
     try:
         if os.path.isfile(TMP_FILE):
             os.remove(TMP_FILE)
@@ -162,7 +163,7 @@ def get_dest_path_for_torrent_file(torrent_file):
 
 
 def main_cycle():
-    print('Запукаем оновной цикл')
+    print('Запукаем основной цикл')
     while True:
         new_files = dropbox_check_new_files()
 
