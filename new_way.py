@@ -101,7 +101,7 @@ def dropbox_load_local_filelist():
     for line in open(DROPBOX_LOCAL_FILE_LIST_BACKUP):
         key, value = line.split(':')
         size, mtime, _ = value.split(';')
-        DROPBOX_LOCAL_FILE_LIST[key] = {'size': size, 'mtime': mtime}
+        DROPBOX_LOCAL_FILE_LIST[key] = {'size': int(size), 'mtime': int(mtime)}
 
 
 def torrent_get_real_filename(torrent_file):
