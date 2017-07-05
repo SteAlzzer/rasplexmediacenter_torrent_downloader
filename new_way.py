@@ -16,7 +16,7 @@ DROPBOX_SCRIPT = 'dropbox.sh'
 DROPBOX_LOCAL_FOLDER = '/media/Dropbox/'
 DROPBOX_TORRENT_FOLDER = 'sharefolder/Torrents/'
 DROPBOX_LOCAL_FILE_LIST = {}
-DROPBOX_LOCAL_FILE_LIST_BACKUP = '~/.dropboxlocalfilelist.tbox'
+DROPBOX_LOCAL_FILE_LIST_BACKUP = os.path.realpath('~/.dropboxlocalfilelist.tbox')
 
 TMP_FILE = '/tmp/tbox.tmp'
 
@@ -139,7 +139,7 @@ def torrent_add_file(torrent_file, dest_folder):
 
 def is_file_torrent(file):
     # todo: get some real shit
-    print('~ Here is an extension...', os.path.splitext(file)[1])
+    print('~ Here is an extension...', os.path.splitext(file)[1], os.path.splitext(file)[1] is '.torrent')
     return os.path.splitext(file)[1] is '.torrent'
 
 
