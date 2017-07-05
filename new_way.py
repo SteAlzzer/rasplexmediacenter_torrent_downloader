@@ -139,7 +139,7 @@ def torrent_add_file(torrent_file, dest_folder):
 
 def is_file_torrent(file):
     # todo: get some real shit
-    return os.path.splitext[1] is '.torrent'
+    return os.path.splitext()[1] is '.torrent'
 
 
 def is_file_cmd(file):
