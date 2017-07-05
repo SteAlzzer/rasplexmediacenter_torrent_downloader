@@ -46,9 +46,9 @@ def dropbox_check_new_files():
             new_files.append(file)
             continue
         else:
-            if os.path.getsize(file) != DROPBOX_LOCAL_FILE_LIST[rel_file]['size'] or os.path.getmtime(file) != DROPBOX_LOCAL_FILE_LIST[rel_file]['mtime']:
+            if int(os.path.getsize(file)) != DROPBOX_LOCAL_FILE_LIST[rel_file]['size'] or int(os.path.getmtime(file)) != DROPBOX_LOCAL_FILE_LIST[rel_file]['mtime']:
                 print('~Metadata changed', file)
-                print('~ > file', os.path.getsize(file), os.path.getmtime(file))
+                print('~ > file', int(os.path.getsize(file)), int(os.path.getmtime(file)))
                 print('~ > saved', DROPBOX_LOCAL_FILE_LIST[rel_file]['size'], DROPBOX_LOCAL_FILE_LIST[rel_file]['mtime'])
                 new_files.append(file)
                 continue
@@ -80,8 +80,8 @@ def dropbox_update_local_filelist(file_to_update):
     if rel_file not in DROPBOX_LOCAL_FILE_LIST:
         print('~This is new file in list', rel_file)
         DROPBOX_LOCAL_FILE_LIST[rel_file] = {}
-    DROPBOX_LOCAL_FILE_LIST[rel_file]['size'] = os.path.getsize(file_to_update)
-    DROPBOX_LOCAL_FILE_LIST[rel_file]['mtime'] = os.path.getmtime(file_to_update)
+    DROPBOX_LOCAL_FILE_LIST[rel_file]['size'] = int(os.path.getsize(file_to_update))
+    DROPBOX_LOCAL_FILE_LIST[rel_file]['mtime'] = int(os.path.getmtime(file_to_update))
 
 
 def dropbox_save_local_filelist():
