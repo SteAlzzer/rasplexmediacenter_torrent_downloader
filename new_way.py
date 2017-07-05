@@ -46,8 +46,10 @@ def dropbox_check_new_files():
             new_files.append(file)
             continue
         else:
-            if os.path.getsize(file) is not DROPBOX_LOCAL_FILE_LIST[rel_file]['size'] or os.path.getmtime(file) is not DROPBOX_LOCAL_FILE_LIST[rel_file]['mtime']:
-                print('~Metadata changed', file, os.path.getsize(file), os.path.getmtime(file))
+            if os.path.getsize(file) != DROPBOX_LOCAL_FILE_LIST[rel_file]['size'] or os.path.getmtime(file) != DROPBOX_LOCAL_FILE_LIST[rel_file]['mtime']:
+                print('~Metadata changed', file)
+                print('~ > file', os.path.getsize(file), os.path.getmtime(file))
+                print('~ > saved', DROPBOX_LOCAL_FILE_LIST[rel_file]['size'], DROPBOX_LOCAL_FILE_LIST[rel_file]['mtime'])
                 new_files.append(file)
                 continue
 
