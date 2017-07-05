@@ -88,7 +88,7 @@ def dropbox_save_local_filelist():
     print('~Backuping monitoring list')
     with open(DROPBOX_LOCAL_FILE_LIST_BACKUP, 'w') as bkp:
         for key, value in DROPBOX_LOCAL_FILE_LIST.items():
-            line = '"{}":{};{};\n'.format(key, value['size'], value['mtime'])
+            line = '{}:{};{};\n'.format(key, value['size'], value['mtime'])
             bkp.write(line)
 
 
